@@ -71,15 +71,19 @@ class ThreadPosIniziale(Thread):
         # flag che diventa true se non viene rilevato nessun landmark utente
         errore = False
 
-        # flag che viene attivato quando l'utente di trova in posizione di partenza
-        ripRilevata = False
 
         ripetizioneInCorso = False
 
-        # numero di ripetizioni
-        rip = -1
+        eraPosIniziale = False
 
-        soglia = 23
+        almenoUnaRipFatta = False
+
+        # numero di ripetizioni
+        ripetizioni = 0
+
+        sogliaPosIniziale = 23
+
+        sogliaEsecuzione = 25  # DA SISTEMARE
 
         # inizializza vettore dal quale creare il dataframe
         datiRipInCorso = []
@@ -115,32 +119,43 @@ class ThreadPosIniziale(Thread):
                     datiFrameCorrente.append(lm.x)
                     datiFrameCorrente.append(lm.y)
 
-                if ripetizioneInCorso:
-                    datiRipInCorso.append(datiFrameCorrente)
-
                 # calcolo la distanza tra i dati del frame corrente e i dati della posizione di partenza
                 distanzaPosIniziale, path = fastdtw(datiFrameCorrente, vettorePosIniziale, dist=euclidean)
 
                 print("distanza pos iniziale {}".format(distanzaPosIniziale))
 
-                # se l'utente si trova in posizione di partenza
-                if distanzaPosIniziale < soglia:
+                eInPosIniziale = distanzaPosIniziale < sogliaPosIniziale
 
-                    if not ripRilevata:
-                        ripetizioneInCorso = not ripetizioneInCorso
-                        ripRilevata = True
-                        if not ripetizioneInCorso:
-                            rip += 1
-                            medianaEsecuzione = self.distanza(datiRipInCorso, colonne, dfEsecuzioneCorretta)
-                            datiRipInCorso = []
-                            print("Mediana esecuzione {}".format(medianaEsecuzione))
-                            print(rip)
+                if eInPosIniziale and not eraPosIniziale:
+
+                    eraPosIniziale = True
+                    ripetizioneInCorso = False
+
+                    if almenoUnaRipFatta:
+                        valutazioneEsecuzione = self.distanza(datiRipInCorso, colonne, dfEsecuzioneCorretta)
+                        print("Valutazione esecuzione {}".format(valutazioneEsecuzione))
+                        datiRipInCorso = []
+
+                        if valutazioneEsecuzione > sogliaEsecuzione: #Se l'esecuzione è corretta
+                            ripetizioni += 1
+
+                    else:
+                        almenoUnaRipFatta = True
+
                 else:
-                    ripRilevata = False
+
+                    if eraPosIniziale and not eInPosIniziale:
+                        ripetizioneInCorso = True
+                        eraPosIniziale = False
+
+                if ripetizioneInCorso:
+                    datiRipInCorso.append(datiFrameCorrente)
+
             else:
                 if not errore:
                     errore = True
                     print("Posizionati di fronte alla webcam")
+
 
     def distanza(self, datiRipInCorso, colonne, dfEsecuzioneCorretta):
 
