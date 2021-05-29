@@ -71,7 +71,6 @@ class ThreadPosIniziale(Thread):
         # flag che diventa true se non viene rilevato nessun landmark utente
         errore = False
 
-
         ripetizioneInCorso = False
 
         eraPosIniziale = False
@@ -136,7 +135,8 @@ class ThreadPosIniziale(Thread):
                         print("Valutazione esecuzione {}".format(valutazioneEsecuzione))
                         datiRipInCorso = []
 
-                        if valutazioneEsecuzione > sogliaEsecuzione: #Se l'esecuzione è corretta
+                        # se l'esecuzione è corretta
+                        if valutazioneEsecuzione < sogliaEsecuzione:
                             ripetizioni += 1
 
                     else:
@@ -155,7 +155,6 @@ class ThreadPosIniziale(Thread):
                 if not errore:
                     errore = True
                     print("Posizionati di fronte alla webcam")
-
 
     def distanza(self, datiRipInCorso, colonne, dfEsecuzioneCorretta):
 

@@ -15,7 +15,7 @@ def valida_risposte(domanda, risposte_valide):
     domanda += " : "
 
     while not valida:
-        risposta = input(domanda)
+        risposta = input(domanda).lower().capitalize()
         if len([risposta_valida for risposta_valida in risposte_valide if risposta_valida == risposta]) > 0:
             valida = True
         else:
@@ -24,8 +24,7 @@ def valida_risposte(domanda, risposte_valide):
 
 
 def main():
-    esercizio = valida_risposte("Quale esercizio vuoi svolgere?", ["flessioni"])
-    esercizio = esercizio.capitalize()
+    esercizio = valida_risposte("Quale esercizio vuoi svolgere?", ["Flessioni"])
 
     # se l'esercizio viene riconosciuto, si passa alla fase successiva
     m = i.main(esercizio)
