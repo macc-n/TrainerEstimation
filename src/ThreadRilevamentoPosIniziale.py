@@ -8,6 +8,23 @@ from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
 
 
+def distanza(datiRipInCorso, colonne, dfEsecuzioneCorretta):
+
+    dfRip = pd.DataFrame(datiRipInCorso, columns=colonne)
+    valoriDtw = []
+
+    for column in dfRip:
+        colonna1 = dfEsecuzioneCorretta[column]
+        colonna2 = dfRip[column]
+
+        distanza, path = fastdtw(colonna1, colonna2, dist=euclidean)
+        valoriDtw.append(distanza)
+
+    mediana = stat.median(valoriDtw)
+
+    return mediana
+
+
 class ThreadPosIniziale(Thread):
 
     def __init__(self, webcam, esercizio):
@@ -131,7 +148,7 @@ class ThreadPosIniziale(Thread):
                     ripetizioneInCorso = False
 
                     if almenoUnaRipFatta:
-                        valutazioneEsecuzione = self.distanza(datiRipInCorso, colonne, dfEsecuzioneCorretta)
+                        valutazioneEsecuzione = distanza(datiRipInCorso, colonne, dfEsecuzioneCorretta)
                         print("Valutazione esecuzione {}".format(valutazioneEsecuzione))
                         datiRipInCorso = []
 
@@ -155,19 +172,3 @@ class ThreadPosIniziale(Thread):
                 if not errore:
                     errore = True
                     print("Posizionati di fronte alla webcam")
-
-    def distanza(self, datiRipInCorso, colonne, dfEsecuzioneCorretta):
-
-        dfRip = pd.DataFrame(datiRipInCorso, columns=colonne)
-        valoriDtw = []
-
-        for column in dfRip:
-            colonna1 = dfEsecuzioneCorretta[column]
-            colonna2 = dfRip[column]
-
-            distanza, path = fastdtw(colonna1, colonna2, dist=euclidean)
-            valoriDtw.append(distanza)
-
-        mediana = stat.median(valoriDtw)
-
-        return mediana
