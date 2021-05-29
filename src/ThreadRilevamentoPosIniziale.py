@@ -155,6 +155,7 @@ class ThreadPosIniziale(Thread):
                         # se l'esecuzione è corretta
                         if valutazioneEsecuzione < sogliaEsecuzione:
                             ripetizioni += 1
+                            print(ripetizioni)
 
                     else:
                         almenoUnaRipFatta = True
