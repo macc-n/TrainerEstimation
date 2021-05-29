@@ -125,6 +125,7 @@ class ThreadPosIniziale(Thread):
 
             # legge frame video
             return_value, img = webcam.read()
+            img = cv2.flip(img, 1)
 
             width = 500
             height = 300

@@ -41,6 +41,7 @@ class Interfaccia:
 
             # legge frame video
             success, img = webcam.read()
+            img = cv2.flip(img, 1)
 
             # converte il frame in RGB
             imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
