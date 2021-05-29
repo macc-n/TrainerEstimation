@@ -8,8 +8,7 @@ from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
 
 
-def distanza(datiRipInCorso, colonne, dfEsecuzioneCorretta):
-
+def distanzaEsecuzione(datiRipInCorso, colonne, dfEsecuzioneCorretta):
     dfRip = pd.DataFrame(datiRipInCorso, columns=colonne)
     valoriDtw = []
 
@@ -23,6 +22,15 @@ def distanza(datiRipInCorso, colonne, dfEsecuzioneCorretta):
     mediana = stat.median(valoriDtw)
 
     return mediana
+
+
+def distanzaDaPosIniziale(esercizio, vettorePosIniziale, datiFrameCorrente):
+    distanza = 0
+
+    for i in range(66):
+        distanza += abs(vettorePosIniziale[i] - datiFrameCorrente[i])  # da fare valore assoluto
+
+    return distanza
 
 
 class ThreadPosIniziale(Thread):
@@ -97,7 +105,7 @@ class ThreadPosIniziale(Thread):
         # numero di ripetizioni
         ripetizioni = 0
 
-        sogliaPosIniziale = 23
+        sogliaPosIniziale = 11  # da sistemare
 
         sogliaEsecuzione = 25  # DA SISTEMARE
 
@@ -107,7 +115,13 @@ class ThreadPosIniziale(Thread):
         while True:
 
             # Svuoto il vettore contenente i landmark del frame corrente
-            datiFrameCorrente = []
+            datiFrameCorrente = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                 0, 0, 0, 0, 0, 0]
 
             # legge frame video
             return_value, img = webcam.read()
@@ -132,11 +146,11 @@ class ThreadPosIniziale(Thread):
                 # per ogni landmark trovato
                 for id, lm in enumerate(results.pose_landmarks.landmark):
                     # aggiunge il landmark rilevato al vettore
-                    datiFrameCorrente.append(lm.x)
-                    datiFrameCorrente.append(lm.y)
+                    datiFrameCorrente[id * 2] = lm.x
+                    datiFrameCorrente[(id * 2) + 1] = lm.y
 
                 # calcolo la distanza tra i dati del frame corrente e i dati della posizione di partenza
-                distanzaPosIniziale, path = fastdtw(datiFrameCorrente, vettorePosIniziale, dist=euclidean)
+                distanzaPosIniziale = distanzaDaPosIniziale(esercizio, vettorePosIniziale, datiFrameCorrente)
 
                 print("distanza pos iniziale {}".format(distanzaPosIniziale))
 
@@ -148,7 +162,7 @@ class ThreadPosIniziale(Thread):
                     ripetizioneInCorso = False
 
                     if almenoUnaRipFatta:
-                        valutazioneEsecuzione = distanza(datiRipInCorso, colonne, dfEsecuzioneCorretta)
+                        valutazioneEsecuzione = distanzaEsecuzione(datiRipInCorso, colonne, dfEsecuzioneCorretta)
                         print("Valutazione esecuzione {}".format(valutazioneEsecuzione))
                         datiRipInCorso = []
 
@@ -173,3 +187,18 @@ class ThreadPosIniziale(Thread):
                 if not errore:
                     errore = True
                     print("Posizionati di fronte alla webcam")
+
+# piegamenti: spalla sinistra, spalla destra
+# mani
+# gomiti
+# testa-mani
+
+# squat
+# piedi
+# ginocchia
+# anche-ginocchia
+# testa_piedi
+
+# addominali
+# piedi-anche
+# spalle ginocchia
