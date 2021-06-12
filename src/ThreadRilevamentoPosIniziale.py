@@ -28,8 +28,7 @@ def distanzaDaPosIniziale(esercizio, vettorePosIniziale, datiFrameCorrente):
     distanza = 0
 
     for i in range(66):
-        distanza += abs(vettorePosIniziale[i] - datiFrameCorrente[i])  # da fare valore assoluto
-
+        distanza += abs(vettorePosIniziale[i] - datiFrameCorrente[i])
     return distanza
 
 
@@ -187,18 +186,3 @@ class ThreadPosIniziale(Thread):
                 if not errore:
                     errore = True
                     print("Posizionati di fronte alla webcam")
-
-# piegamenti: spalla sinistra, spalla destra
-# mani
-# gomiti
-# testa-mani
-
-# squat
-# piedi
-# ginocchia
-# anche-ginocchia
-# testa_piedi
-
-# addominali
-# piedi-anche
-# spalle ginocchia
