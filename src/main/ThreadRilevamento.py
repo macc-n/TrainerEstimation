@@ -88,10 +88,10 @@ class ThreadEsecuzione(Thread):
 
         for i in range(66):
             # carico il dataframe della posizione iniziale
-            vettorePosIniziale.append(float(open('../res/' + esercizio + '/DatiPosIniziale.txt', "r").readline()))
+            vettorePosIniziale.append(float(open('../../res/' + esercizio + '/DatiPosIniziale.txt', "r").readline()))
 
         # carico il dataframe dell'esecuzione corretta
-        dfEsecuzioneCorretta = pd.read_excel('../res/' + esercizio + '/DataFrameEsecuzione.xlsx')
+        dfEsecuzioneCorretta = pd.read_excel('../../res/' + esercizio + '/DataFrameEsecuzione.xlsx')
 
         # flag che diventa true se non viene rilevato nessun landmark utente
         errore = False
@@ -169,7 +169,7 @@ class ThreadEsecuzione(Thread):
                         # se l'esecuzione è corretta
                         if valutazioneEsecuzione < sogliaEsecuzione:
                             ripetizioni += 1
-                            playsound("../res/sounds reps/" + str(ripetizioni) + ".mp3")
+                            playsound("../../res/sounds reps/" + str(ripetizioni) + ".mp3")
                     else:
                         almenoUnaRipFatta = True
 
