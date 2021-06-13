@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 
 import Basics
-from src.ThreadRilevamentoPosIniziale import ThreadPosIniziale
+from src.ThreadRilevamento import ThreadEsecuzione
 
 
 class Interfaccia:
@@ -31,7 +31,7 @@ class Interfaccia:
         resultsTraining = b.Training()
 
         # verifica quando l'utente si mette in posizione di partenza
-        thread = ThreadPosIniziale(webcam, esercizio)
+        thread = ThreadEsecuzione(webcam, esercizio)
         thread.start()
 
         # mostra il video all'utente
