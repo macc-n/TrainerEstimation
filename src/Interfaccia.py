@@ -1,5 +1,3 @@
-import time
-
 import cv2
 import mediapipe as mp
 
@@ -56,14 +54,6 @@ class Interfaccia:
             if results.pose_landmarks:
                 # disegna i landmarks e le connessioni sull'immagine
                 mpDraw.draw_landmarks(img, results.pose_landmarks, mpPose.POSE_CONNECTIONS)
-
-            # calcola gli fps
-            cTime = time.time()
-            fps = 1 / (cTime - pTime)
-            pTime = cTime
-
-            # scrive gli fps sull'immagine
-            cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
 
             # mostra il frame
             cv2.imshow('img', img)
