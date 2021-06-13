@@ -105,9 +105,9 @@ class ThreadPosIniziale(Thread):
         # numero di ripetizioni
         ripetizioni = 0
 
-        sogliaPosIniziale = 11  # da sistemare
+        sogliaPosIniziale = 12  # da sistemare
 
-        sogliaEsecuzione = 25  # DA SISTEMARE
+        sogliaEsecuzione = 15  # DA SISTEMARE
 
         # inizializza vettore dal quale creare il dataframe
         datiRipInCorso = []
