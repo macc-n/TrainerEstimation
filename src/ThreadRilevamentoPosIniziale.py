@@ -5,6 +5,7 @@ import cv2
 import mediapipe as mp
 import pandas as pd
 from fastdtw import fastdtw
+from playsound import playsound
 from scipy.spatial.distance import euclidean
 
 
@@ -168,8 +169,7 @@ class ThreadPosIniziale(Thread):
                         # se l'esecuzione è corretta
                         if valutazioneEsecuzione < sogliaEsecuzione:
                             ripetizioni += 1
-                            print(ripetizioni)
-
+                            playsound("../res/sounds reps/" + str(ripetizioni) + ".mp3")
                     else:
                         almenoUnaRipFatta = True
 
