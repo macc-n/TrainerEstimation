@@ -24,11 +24,13 @@ def valida_risposte(domanda, risposte_valide):
 
 
 def main():
-    esercizio = valida_risposte("Quale esercizio vuoi svolgere?", ["Flessioni"])
 
-    # se l'esercizio viene riconosciuto, si passa alla fase successiva
-    m = i.main(esercizio)
-    m.main()
+    while True:
+        esercizio = valida_risposte("Quale esercizio vuoi svolgere?", ["Flessioni"])
+
+        # se l'esercizio viene riconosciuto, si passa alla fase successiva
+        m = i.main(esercizio)
+        m.main()
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@ import statistics as stat
 from threading import Thread
 
 import cv2
+import keyboard
 import mediapipe as mp
 import pandas as pd
 from fastdtw import fastdtw
@@ -186,3 +187,5 @@ class ThreadEsecuzione(Thread):
                 if not errore:
                     errore = True
                     print("Posizionati di fronte alla webcam")
+            if keyboard.is_pressed('q'):
+                break

@@ -1,4 +1,5 @@
 import cv2
+import keyboard
 import mediapipe as mp
 
 import Basics
@@ -57,7 +58,9 @@ class Interfaccia:
 
             # mostra il frame
             cv2.imshow('img', img)
-            cv2.waitKey(1)
+
+            if keyboard.is_pressed('q'):
+                break
 
 
 class main:
