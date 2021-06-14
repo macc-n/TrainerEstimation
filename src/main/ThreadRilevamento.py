@@ -169,7 +169,7 @@ class ThreadEsecuzione(Thread):
                         # se l'esecuzione è corretta
                         if valutazioneEsecuzione < sogliaEsecuzione:
                             ripetizioni += 1
-                            playsound("../../res/sounds reps/" + str(ripetizioni) + ".mp3")
+                            playsound("../../res/Sounds/" + str(ripetizioni) + ".mp3")
                     else:
                         almenoUnaRipFatta = True
 
