@@ -1,3 +1,5 @@
+import playsound
+
 import Interfaccia as i
 
 
@@ -24,6 +26,7 @@ def valida_risposte(domanda, risposte_valide):
 
 
 def main():
+    playsound("../../res/Sounds/benvenuto.mp3")
 
     while True:
         esercizio = valida_risposte("Quale esercizio vuoi svolgere?", ["Flessioni"])
