@@ -58,9 +58,9 @@ class Interfaccia:
 
             # mostra il frame
             cv2.imshow('img', img)
-
-            #if keyboard.is_pressed('q'):
-            #    break
+            cv2.waitKey(1)
+            if keyboard.is_pressed('q'):
+                break
 
 
 class main:

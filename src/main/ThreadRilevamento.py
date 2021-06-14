@@ -190,5 +190,5 @@ class ThreadEsecuzione(Thread):
                 if not errore:
                     errore = True
                     print("Posizionati di fronte alla webcam")
-            #if keyboard.is_pressed('q'):
-            #    break
+            if keyboard.is_pressed('q'):
+                break

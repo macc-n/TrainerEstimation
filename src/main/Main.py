@@ -25,7 +25,7 @@ def valida_risposte(domanda, risposte_valide):
 
 def main():
 
-    #while True:
+    while True:
         esercizio = valida_risposte("Quale esercizio vuoi svolgere?", ["Flessioni"])
 
         # se l'esercizio viene riconosciuto, si passa alla fase successiva
