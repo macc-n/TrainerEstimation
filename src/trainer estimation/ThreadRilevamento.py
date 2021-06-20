@@ -1,11 +1,13 @@
-import statistics as stat
 from threading import Thread
 
 import cv2
 import keyboard
 import mediapipe as mp
+import numpy as np
 import pandas as pd
+import tensorflow as tf
 from fastdtw import fastdtw
+from keras.preprocessing import image
 from playsound import playsound
 from scipy.spatial.distance import euclidean
 
@@ -21,25 +23,42 @@ def distanzaEsecuzione(datiRipInCorso, colonne, dfEsecuzioneCorretta):
         distanza, path = fastdtw(colonna1, colonna2, dist=euclidean)
         valoriDtw.append(distanza)
 
-    mediana = stat.median(valoriDtw)
+    mediana = np.mean(valoriDtw)
 
     return mediana
 
 
-def distanzaDaPosIniziale(esercizio, vettorePosIniziale, datiFrameCorrente):
-    distanza = 0
+def distanzaDaPosIniziale(frame, model):
+    pos_riconosciuta = False
 
-    for i in range(66):
-        distanza += abs(vettorePosIniziale[i] - datiFrameCorrente[i])
-    return distanza
+    cv2.imwrite('../trainer estimation/img.jpg', frame)
+    path = '../trainer estimation/img.jpg'
+
+    img = image.load_img(path, target_size=(200, 200))
+    x = image.img_to_array(img)
+    x = np.expand_dims(x, axis=0)
+    images = np.vstack([x])
+    classes = model.predict(images, batch_size=10)
+
+    if classes[0] < 0.5:
+        print(" è flessione")
+        pos_riconosciuta = True
+    else:
+        print(" non è flessione")
+
+    return pos_riconosciuta
 
 
 class ThreadEsecuzione(Thread):
 
     def __init__(self, webcam, esercizio):
+
         Thread.__init__(self)
         self.webcam = webcam
         self.esercizio = esercizio
+
+        # carica classificatore
+        self.pos_cascade = tf.keras.models.load_model('../../res/' + esercizio + '/Classificatore/Classifier')
 
     def run(self):
 
@@ -87,10 +106,6 @@ class ThreadEsecuzione(Thread):
 
         vettorePosIniziale = []
 
-        for i in range(66):
-            # carico il dataframe della posizione iniziale
-            vettorePosIniziale.append(float(open('../../res/' + esercizio + '/DatiPosIniziale.txt', "r").readline()))
-
         # carico il dataframe dell'esecuzione corretta
         dfEsecuzioneCorretta = pd.read_excel('../../res/' + esercizio + '/DataFrameEsecuzione.xlsx')
 
@@ -106,9 +121,7 @@ class ThreadEsecuzione(Thread):
         # numero di ripetizioni
         ripetizioni = 0
 
-        sogliaPosIniziale = 12  # da sistemare
-
-        sogliaEsecuzione = 15  # DA SISTEMARE
+        sogliaEsecuzione = 19  # DA SISTEMARE
 
         # inizializza vettore dal quale creare il dataframe
         datiRipInCorso = []
@@ -150,14 +163,10 @@ class ThreadEsecuzione(Thread):
                     datiFrameCorrente[id * 2] = lm.x
                     datiFrameCorrente[(id * 2) + 1] = lm.y
 
-                # calcolo la distanza tra i dati del frame corrente e i dati della posizione di partenza
-                distanzaPosIniziale = distanzaDaPosIniziale(esercizio, vettorePosIniziale, datiFrameCorrente)
+                # calcolo se l'utente è in posizione iniziale
+                pos_riconosciuta = distanzaDaPosIniziale(img, self.pos_cascade)
 
-                print("distanza pos iniziale {}".format(distanzaPosIniziale))
-
-                eInPosIniziale = distanzaPosIniziale < sogliaPosIniziale
-
-                if eInPosIniziale and not eraPosIniziale:
+                if pos_riconosciuta and not eraPosIniziale:
 
                     eraPosIniziale = True
                     ripetizioneInCorso = False
@@ -170,16 +179,16 @@ class ThreadEsecuzione(Thread):
                         # se l'esecuzione è corretta
                         if valutazioneEsecuzione < sogliaEsecuzione:
                             ripetizioni += 1
-                            playsound("../../res/Sounds/" + str(ripetizioni) + ".mp3")
+                            playsound("../../res/Sounds/reps/" + str(ripetizioni) + ".mp3")
                         else:
-                            playsound("../../res/Sounds/rep_sbagliata.mp3")
+                            playsound("../../res/Sounds/errors/rep_sbagliata.mp3")
                     else:
 
                         almenoUnaRipFatta = True
 
                 else:
 
-                    if eraPosIniziale and not eInPosIniziale:
+                    if eraPosIniziale and not pos_riconosciuta:
                         ripetizioneInCorso = True
                         eraPosIniziale = False
 
@@ -189,6 +198,6 @@ class ThreadEsecuzione(Thread):
             else:
                 if not errore:
                     errore = True
-                    print("Posizionati di fronte alla webcam")
+                    playsound("../../res/Sounds/mess/posizionamento.mp3")
             if keyboard.is_pressed('q'):
                 break

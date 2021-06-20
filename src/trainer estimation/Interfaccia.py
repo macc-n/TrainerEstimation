@@ -1,9 +1,9 @@
 import cv2
 import keyboard
 import mediapipe as mp
-
+from playsound import playsound
 import Basics
-from src.main.ThreadRilevamento import ThreadEsecuzione
+from ThreadRilevamento import ThreadEsecuzione
 
 
 class Interfaccia:
@@ -70,5 +70,5 @@ class main:
 
     def main(self):
         detector = Interfaccia(self.esercizio)
-        print("Mettiti in posizione, aiutati con le linee guida")
+        playsound("../../res/Sounds/mess/inizio esercizio.mp3")
         detector.Interfaccia()
