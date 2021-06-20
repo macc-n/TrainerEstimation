@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
-    <module name="PoseEstimation" />
+    <module name="TrainerEstimation" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
