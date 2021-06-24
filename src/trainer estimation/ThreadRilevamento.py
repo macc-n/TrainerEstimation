@@ -120,7 +120,7 @@ class ThreadEsecuzione(Thread):
 
         # numero di ripetizioni
         ripetizioni = 0
-aa
+
         sogliaEsecuzione = 19
 
         # inizializza vettore dal quale creare il dataframe

@@ -8,7 +8,7 @@ def valida_risposte(domanda, risposte_valide):
     valida = False
     risposta = ""
     domanda = "{} [".format(domanda)
-aa
+
     for i in range(0, len(risposte_valide)):
         domanda += risposte_valide[i]
         if i != len(risposte_valide) - 1:

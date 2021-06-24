@@ -11,7 +11,7 @@ class Interfaccia:
 
     def __init__(self, esercizio):
         self.esercizio = esercizio
-aa
+
     def Interfaccia(self):
 
         esercizio = self.esercizio

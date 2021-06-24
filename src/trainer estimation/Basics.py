@@ -3,7 +3,7 @@ import mediapipe as mp
 
 
 class Training:
-aa
+
     def __init__(self, esercizio):
         self.esercizio = esercizio
 

@@ -1,7 +1,7 @@
 TrainerEstimation è un'applicazione pensata per aiutare gli utenti meno esperti nello svolgimento di esercizi fisici. Al momento l'unico esercizio supportato sono le flessioni. Per aggiungerne altri, bisogna solamente
 inserire le relative risorse.
 
-aa
+
 La struttura della repository si presenta nel seguente modo:
 
 |–– doc
