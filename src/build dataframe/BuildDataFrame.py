@@ -21,7 +21,7 @@ class DataFrameBuilder:
         data1 = []
 
         try:
-            while True:
+            while True:aa
 
                 data = []
 
