@@ -23,9 +23,9 @@ def distanzaEsecuzione(datiRipInCorso, colonne, dfEsecuzioneCorretta):
         distanza, path = fastdtw(colonna1, colonna2, dist=euclidean)
         valoriDtw.append(distanza)
 
-    mediana = np.mean(valoriDtw)
+    media = np.mean(valoriDtw)
 
-    return mediana
+    return media
 
 
 def distanzaDaPosIniziale(frame, model):
