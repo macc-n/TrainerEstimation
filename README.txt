@@ -26,5 +26,5 @@ Nel seguito si dettagliano i ruoli dei diversi componenti:
 
 - src: la cartella principale del progetto, in cui si trova il codice dell’applicazione:
 	- build classifier: contiene lo script per creare un classificatore binario, dato un dataset
-	- build dataframe: contiene lo script per creare un dataframe in formato Excel, dove ogni riga rappresenta un frame del video dato in input, mentre ogni coppia di colonne rappresenta le coordinate x e y di un landmark
+	- build dataframe: contiene lo script per creare un dataframe in formato Excel, dove ogni riga rappresenta un frame del video dato in input, mentre ogni coppia di colonne           rappresenta le coordinate x e y di un landmark
 	- trainer estimation: contiene il codice dell'applicazione. Per testarla, eseguire lo script "Main.py"
