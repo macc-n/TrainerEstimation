@@ -75,7 +75,7 @@ def BuildModel():
 
 def Training(train_generator, validation_generator, model):
     history = model.fit(train_generator, steps_per_epoch=8, epochs=15, verbose=1, validation_data=validation_generator, validation_steps=8)
-    model.save('../build classifier/Classifier')
+    model.save('../../res/flessioni/classificatore/classifier')
 
 
 def Accuracy(model, validation_generator):
